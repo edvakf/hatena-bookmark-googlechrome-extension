@@ -1,5 +1,20 @@
 // widget_embedder.js
 
+//{
+//  "run_at": "document_end",
+//  "all_frames": false,
+//  "js": [
+//    "content/widget_embedder.js"
+//  ],
+//  "css": [
+//    "content/widget_embedder.css"
+//  ],
+//  "matches": [
+//    "http://*/*",
+//    "https://*/*"
+//  ]
+//}
+
 // XXX ToDo: Consider about namespaces.
 
 const B_HTTP = 'http://b.hatena.ne.jp/';
@@ -329,4 +344,25 @@ function getEntryURL(url) {
 
 
 if (window.top == window.self)
-    SiteinfoRequestor.init();
+    document.addEventListener('DOMContentLoaded', function() {
+        // widget-embedder.css
+        var css = [
+            '.hBookmark-widget-counter {',
+            '    background: none !important;',
+            '    text-decoration: none !important;',
+            '    margin: 0 0 0 2px;',
+            '    border: none !important;',
+            '    display: inline !important;',
+            '}',
+            '',
+            '.hBookmark-widget-counter > img {',
+            '    border: none;',
+            '    vertical-align: middle;',
+            '}'
+        ].join('\n');
+        var st = document.createElement('style');
+        st.textContent = css;
+        if (document.head) document.head.appendChild(st);
+
+        SiteinfoRequestor.init();
+    }, false);

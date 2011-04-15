@@ -1,4 +1,14 @@
-
+//{
+//  "run_at": "document_end",
+//  "all_frames": false,
+//  "js": [
+//    "content/bookmarkedit_bridge.js"
+//  ],
+//  "matches": [
+//    "http://*/*",
+//    "https://*/*"
+//  ]
+//},
 
 var port;
 function init() {
@@ -68,6 +78,5 @@ function getImages() {
 }
 
 
-if (window.top == window.self)
-    init();
-
+if (window.top == window.self) document.addEventListener('DOMContentLoaded', init, false);
+    //init();
