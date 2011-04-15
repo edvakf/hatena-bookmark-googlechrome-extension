@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        id="http://atsushi-takayama.com/hatena-bookmark-opera-extension"
+        version="1.0.0">
+
+  <name>Hatena Bookmark Opera Extension</name>
+
+  <description xml:lang="ja">Google Chrome 用はてなブックマーク拡張を Opera に移植</description>
+
+  <license xml:lang="ja" href="http://sourceforge.jp/projects/opensource/wiki/licenses%2FMIT_license">MIT ライセンス</license>
+
+  <author href="http://d.hatena.ne.jp/edvakf/">edvakf</author>
+
+  <icon width="64" height="64" src="images/logo64.png" />
+
+  <access origin="https://hatena.ne.jp" subdomains="true" />
+  <access origin="http://hatena.ne.jp" subdomains="true" />
+
+  <content src="background/background.html"
+           encoding="utf-8"
+           type="text/html"/>
+
+</widget>
