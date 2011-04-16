@@ -18,6 +18,10 @@ if (typeof opera === 'object') {
             height: '600px',
             href: 'popup.html'
         },
+        badge: {
+            color: '#ffffff',
+            display: 'block',
+        }
     });
     opera.contexts.toolbar.addItem(OperaButton);
 
@@ -124,7 +128,7 @@ if (typeof opera === 'object') {
                 OperaButton.badge.textContent = detail.text;
             },
             setBadgeBackgroundColor: function(detail) {
-                OperaButton.badge.color = 'rgba(' + detail.color.join(',') + ')';
+                OperaButton.badge.backgroundColor = 'rgba(' + detail.color.join(',') + ')';
             },
             onClicked: {
                 addListener: function (callback) {
