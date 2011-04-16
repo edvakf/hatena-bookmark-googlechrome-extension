@@ -3,6 +3,7 @@ if (typeof opera === 'object') {
     location = window.location;
     HTMLImageElement = window.HTMLImageElement;
     XPathResult = window.XPathResult;
+    navigator = window.navigator;
 
     // chrome util
     chrome = {
