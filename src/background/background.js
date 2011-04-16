@@ -29,12 +29,12 @@ $.extend(Manager, {
             title: tab.title
         });
     },
-    editBookmarkTabId: function(tabId) {
-        chrome.tabs.get(tabId, Manager.editBookmarkTab);
-    },
-    editBookmarkCurrentTab: function() {
-        chrome.tabs.getSelected(null, Manager.editBookmarkTab);
-    },
+    //editBookmarkTabId: function(tabId) {
+        //chrome.tabs.get(tabId, Manager.editBookmarkTab);
+    //},
+    //editBookmarkCurrentTab: function() {
+        //chrome.tabs.getSelected(null, Manager.editBookmarkTab);
+    //},
     saveBookmarkError: function(data) {
         console.error(data);
         var url = '/background/popup.html?error=1&url=' + encodeURIComponent(data.url) + '&comment=' + data.comment;
@@ -116,11 +116,11 @@ $.extend(Manager, {
         Manager.updateBookmarkIcon(tab);
         Manager.updateBookmarkCounter(tab);
     },
-    updateTabById: function(tabId) {
-        chrome.tabs.get(tabId, function(tab) {
-            Manager.updateTab(tab);
-        });
-    },
+    //updateTabById: function(tabId) {
+        //chrome.tabs.get(tabId, function(tab) {
+            //Manager.updateTab(tab);
+        //});
+    //},
     updateCurrentTab: function() {
         chrome.tabs.getSelected(null, function(t) {
             chrome.windows.getCurrent(function(w) {
@@ -216,10 +216,10 @@ $(document).ready(function() {
     }
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId, opt) {
-    if (opt.status === 'loading')
-        Manager.updateTabById(tabId);
-});
+//chrome.tabs.onUpdated.addListener(function(tabId, opt) {
+    //if (opt.status === 'loading')
+        //Manager.updateTabById(tabId);
+//});
 
 chrome.tabs.onSelectionChanged.addListener(function(tabId) {
     Manager.updateCurrentTab();
@@ -227,43 +227,43 @@ chrome.tabs.onSelectionChanged.addListener(function(tabId) {
 
 chrome.browserAction.onClicked.addListener(function(tab) {
     var url = tab.url;
-    var info = window.popupWinInfo;
-    if (info) {
-        chrome.windows.getAll(null, function(allWindows) {
-            var flag = false;
-            for (var i = 0;  i < allWindows.length; i++) {
-                if (parseInt(allWindows[i].id) == parseInt(info.windowId)) {
-                    flag = allWindows[i];
-                    break;
-                }
-            }
-            if (flag) {
-                chrome.tabs.get(info.tabId, function(tab) {
-                    if (URI.parse(tab.url).param('url') != url) {
-                        var port = chrome.tabs.connect(window.popupWinInfo.tabId);
-                        port.postMessage({
-                            message: 'popup-reload',
-                            data: {
-                                url: url,
-                            }
-                        });
-                    }
-                    flag.focus();
-                });
-            } else {
-                delete window.popupWinInfo;
-                setTimeout(function() {
-                    window.open('/background/popup.html?url=' + encodeURIComponent(url));
-                }, 10);
-            }
-        });
-    } else {
+    //var info = window.popupWinInfo;
+    //if (info) {
+        //chrome.windows.getAll(null, function(allWindows) {
+            //var flag = false;
+            //for (var i = 0;  i < allWindows.length; i++) {
+                //if (parseInt(allWindows[i].id) == parseInt(info.windowId)) {
+                    //flag = allWindows[i];
+                    //break;
+                //}
+            //}
+            //if (flag) {
+                //chrome.tabs.get(info.tabId, function(tab) {
+                    //if (URI.parse(tab.url).param('url') != url) {
+                        //var port = chrome.tabs.connect(window.popupWinInfo.tabId);
+                        //port.postMessage({
+                            //message: 'popup-reload',
+                            //data: {
+                                //url: url,
+                            //}
+                        //});
+                    //}
+                    //flag.focus();
+                //});
+            //} else {
+                //delete window.popupWinInfo;
+                //setTimeout(function() {
+                    //window.open('/background/popup.html?url=' + encodeURIComponent(url));
+                //}, 10);
+            //}
+        //});
+    //} else {
         chrome.windows.getCurrent(function(w) {
             setTimeout(function() {
                 window.open('/background/popup.html?url=' + encodeURIComponent(url));
             }, 10);
         });
-    }
+    //}
 });
 
 /*
