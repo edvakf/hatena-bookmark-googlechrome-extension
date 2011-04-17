@@ -21,6 +21,7 @@ function init() {
 }
 
 function onMessage(info) {
+    if (info.message!=='get') return;
     var data = {
         url: location.href,
     };
@@ -47,13 +48,7 @@ function getTitle() {
 }
 
 function getCannonical() {
-    var link = document.evaluate(
-        '/h:html/h:head/h:link[translate(@rel, "CANONICAL", "canonical") = "canonical"]',
-        document,
-        function () { return document.documentElement.namespaceURI || "" },
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
-        null
-    ).singleNodeValue;
+    var link = document.querySelector('link[rel="canonical"]');
     if (!link || !link.href) return null;
     var url = link.href;
     if (location.href == url) return null;

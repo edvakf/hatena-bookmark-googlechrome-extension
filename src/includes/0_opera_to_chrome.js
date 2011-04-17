@@ -12,7 +12,9 @@ if (typeof opera === 'object') {
                 return { // port object
                     onMessage: {
                         addListener: function(callback) {
-                            opera.extension.onmessage = callback;
+                            opera.extension.addEventListener('message', function(e) {
+                                callback(e.data);
+                            }, false);
                         }
                     },
                     postMessage: function(msg) {
