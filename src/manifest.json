@@ -27,7 +27,7 @@
       "run_at": "document_end",
       "all_frames": false,
       "js": [
-        "content/bookmarkedit_bridge.js"
+        "includes/bookmarkedit_bridge.js"
       ],
       "matches": [
         "http://*/*",
@@ -38,7 +38,7 @@
       "run_at": "document_end",
       "all_frames": false,
       "js": [
-        "content/login_check.js"
+        "includes/login_check.js"
       ],
       "matches": [
         "http://b.hatena.ne.jp/guide/chrome_register",
@@ -53,7 +53,7 @@
       "run_at": "document_end",
       "all_frames": false,
       "js": [
-        "content/logout.js"
+        "includes/logout.js"
       ],
       "matches": [
         "http://www.hatena.ne.jp/logout",
@@ -66,10 +66,10 @@
       "run_at": "document_end",
       "all_frames": false,
       "js": [
-        "content/widget_embedder.js"
+        "includes/widget_embedder.js"
       ],
       "css": [
-        "content/widget_embedder.css"
+        "includes/widget_embedder.css"
       ],
       "matches": [
         "http://*/*",
