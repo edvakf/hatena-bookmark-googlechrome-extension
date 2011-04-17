@@ -104,10 +104,10 @@ $.extend(Manager, {
                 }
             });
         } else {
-            chrome.browserAction.setBadgeText({tabId: tab.id, 
+            chrome.browserAction.setBadgeText({tabId: tab && tab.id, 
                 text: '',
             });
-            chrome.browserAction.setBadgeBackgroundColor({tabId: tab.id, 
+            chrome.browserAction.setBadgeBackgroundColor({tabId: tab && tab.id, 
                 color: [99,99,99, 255],
             });
         }
@@ -116,11 +116,11 @@ $.extend(Manager, {
         Manager.updateBookmarkIcon(tab);
         Manager.updateBookmarkCounter(tab);
     },
-    //updateTabById: function(tabId) {
-        //chrome.tabs.get(tabId, function(tab) {
-            //Manager.updateTab(tab);
-        //});
-    //},
+    updateTabById: function(tabId) {
+        chrome.tabs.get(tabId, function(tab) {
+            Manager.updateTab(tab);
+        });
+    },
     updateCurrentTab: function() {
         chrome.tabs.getSelected(null, function(t) {
             chrome.windows.getCurrent(function(w) {
@@ -216,10 +216,10 @@ $(document).ready(function() {
     }
 });
 
-//chrome.tabs.onUpdated.addListener(function(tabId, opt) {
-    //if (opt.status === 'loading')
-        //Manager.updateTabById(tabId);
-//});
+chrome.tabs.onUpdated.addListener(function(tabId, opt) {
+    if (opt.status === 'loading')
+        Manager.updateTabById(tabId);
+});
 
 chrome.tabs.onSelectionChanged.addListener(function(tabId) {
     Manager.updateCurrentTab();

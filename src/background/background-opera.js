@@ -19,6 +19,7 @@ if (typeof opera === 'object') {
             href: 'popup.html'
         },
         badge: {
+            backgroundColor: 'rgba(96,255,0, 200)',
             color: '#ffffff',
             display: 'block',
         }
@@ -151,4 +152,18 @@ if (typeof opera === 'object') {
             }
         }
     };
+
+    // Opera doesn't use a tabId, so this does not work;
+    //chrome.tabs.onUpdated.addListener(function(tabId, opt) {
+        //if (opt.status === 'loading')
+            //Manager.updateTabById(tabId);
+    //});
+    // Instead, just update the bookmark count every time a page is opened;
+    opera.extension.addEventListener('connect', function() {
+        Manager.updateTab(opera.extension.tabs.getFocused());
+    }, false);
+    // and when a new tab (speed dial) is created, reset the counter
+    opera.extension.tabs.addEventListener('create', function(e) {
+        Manager.updateTab(opera.extension.tabs.getFocused());
+    }, false);
 }
