@@ -54,24 +54,36 @@ if (typeof opera === 'object') {
             if ($('#loginform').length) return false;
             $([
                 '<form id="loginform">',
-                '<p>ユーザー名 <input id="login_username" /></p>',
-                '<p>パスワード <input type="password" id="login_password" /></p>',
-                '<p><input type="submit" value="ログイン" /></p>',
+                    '<p>',
+                        '<label for="login_username">ユーザー名</label>',
+                        '<input id="login_username" />',
+                    '</p>',
+                    '<p>',
+                        '<label for="login_password">パスワード</label>',
+                        '<input type="password" id="login_password" />',
+                    '</p>',
+                    '<p>',
+                        '<input type="checkbox" id="login_persistent" value="1" checked/>',
+                        '<label for="login_persistent">次回から自動的にログイン</label>',
+                        '<input type="submit" value="ログイン" />',
+                    '</p>',
                 '</form>'
             ].join('\n'))
             .appendTo($(this).parent())
             .submit(function() {
-                $(this).find('input').attr('disabled', 'disabled');
                 var name = $(this).find('#login_username').val();
                 var pass = $(this).find('#login_password').val();
+                var pers = $(this).find('#login_persistent').val();
                 if (!name) {
-                    $('#bookmark-login-header').text('ユーザー名が空欄です');
+                    $('#bookmark-login-header').text('ユーザー名が空欄です').css('color', 'red');
                 } else if (!pass) {
-                    $('#bookmark-login-header').text('パスワードが空欄です');
+                    $('#bookmark-login-header').text('パスワードが空欄です').css('color', 'red');
                 } else {
+                    $(this).find('input').attr('disabled', 'disabled');
                     $.post('http://www.hatena.ne.jp/login', {
                         name: name,
-                        password: pass
+                        password: pass,
+                        persistent: pers
                     }).next(function() {
                         opera.extension.postMessage({message: 'login_check'});
                         $('#bookmark-login-header').text('ログイン完了。3秒後にリロードします。切り替わらない場合は再度開いてください。');
