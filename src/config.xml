@@ -13,8 +13,7 @@
 
   <icon width="64" height="64" src="images/logo64.png" />
 
-  <access origin="https://hatena.ne.jp" subdomains="true" />
-  <access origin="http://hatena.ne.jp" subdomains="true" />
+  <access origin="*" /> <!-- download icons in the popup etc. -->
 
   <content src="background/background.html"
            encoding="utf-8"
