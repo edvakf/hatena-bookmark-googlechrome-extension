@@ -36,6 +36,17 @@ if (typeof opera === 'object') {
         // don't know why this element is here
         $('#comment-show').hide();
 
+        // auto-adjust window size
+        var popup = opera.extension.bgProcess.OperaButton.popup;
+        setTimeout(function() {
+            popup.width = document.body.style.width; // set in popup.js
+        }, 10);
+        setInterval(function() {
+            popup.height = Math.max(200, // minimum height
+                $('#main:visible').height() ||
+                $('#eula:visible').height() + 20); // 20 is margin-top & bottom
+        }, 100);
+
         // add logout button
         $('#username').parent()
         .append('<input type="button" value="ログアウト">')
