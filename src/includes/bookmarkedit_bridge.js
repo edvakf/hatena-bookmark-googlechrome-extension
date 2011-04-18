@@ -73,5 +73,10 @@ function getImages() {
 }
 
 
-if (window.top == window.self) document.addEventListener('DOMContentLoaded', init, false);
-    //init();
+if (window.top == window.self) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init, false);
+    } else {
+        init();
+    }
+}

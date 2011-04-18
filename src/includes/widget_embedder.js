@@ -343,26 +343,10 @@ function getEntryURL(url) {
 }
 
 
-if (window.top == window.self)
-    document.addEventListener('DOMContentLoaded', function() {
-        // widget-embedder.css
-        var css = [
-            '.hBookmark-widget-counter {',
-            '    background: none !important;',
-            '    text-decoration: none !important;',
-            '    margin: 0 0 0 2px;',
-            '    border: none !important;',
-            '    display: inline !important;',
-            '}',
-            '',
-            '.hBookmark-widget-counter > img {',
-            '    border: none;',
-            '    vertical-align: middle;',
-            '}'
-        ].join('\n');
-        var st = document.createElement('style');
-        st.textContent = css;
-        if (document.head) document.head.appendChild(st);
-
+if (window.top == window.self) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', SiteinfoRequestor.init, false);
+    } else {
         SiteinfoRequestor.init();
-    }, false);
+    }
+}
