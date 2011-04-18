@@ -66,42 +66,43 @@ if (typeof opera === 'object') {
             $([
                 '<form id="loginform">',
                     '<p>',
-                        '<label for="login_username">ユーザー名</label>',
-                        '<input id="login_username" />',
+                        '<label for="name">ユーザー名</label>',
+                        '<input id="name" name="name" />',
                     '</p>',
                     '<p>',
-                        '<label for="login_password">パスワード</label>',
-                        '<input type="password" id="login_password" />',
+                        '<label for="password">パスワード</label>',
+                        '<input type="password" id="password" name="password" />',
                     '</p>',
                     '<p>',
-                        '<input type="checkbox" id="login_persistent" value="1" checked/>',
-                        '<label for="login_persistent">次回から自動的にログイン</label>',
+                        '<input type="checkbox" id="persistent" name="persistent" value="1" checked/>',
+                        '<label for="persistent">次回から自動的にログイン</label>',
                         '<input type="submit" value="ログイン" />',
                     '</p>',
                 '</form>'
             ].join('\n'))
             .appendTo($(this).parent())
             .submit(function() {
-                var name = $(this).find('#login_username').val();
-                var pass = $(this).find('#login_password').val();
-                var pers = $(this).find('#login_persistent').val();
-                if (!name) {
+                if (!$(this).find('#name').val()) {
                     $('#bookmark-login-header').text('ユーザー名が空欄です').css('color', 'red');
-                } else if (!pass) {
+                } else if (!$(this).find('#password').val()) {
                     $('#bookmark-login-header').text('パスワードが空欄です').css('color', 'red');
                 } else {
-                    $(this).find('input').attr('disabled', 'disabled');
-                    $.post('http://www.hatena.ne.jp/login', {
-                        name: name,
-                        password: pass,
-                        persistent: pers
-                    }).next(function() {
+                    console.log($(this).html());
+                    console.log($(this).serialize());
+                    $.post('http://www.hatena.ne.jp/login', $(this).serialize())
+                    .next(function() {
                         opera.extension.postMessage({message: 'login_check'});
-                        $('#bookmark-login-header').text('ログイン完了。3秒後にリロードします。切り替わらない場合は再度開いてください。');
+                        $('#bookmark-login-header')
+                        .html(
+                            'ログイン完了。3秒後にリロードします。' +
+                            '<br/>' +
+                            '「ログインしていません」と出た場合は一旦閉じて再度開いてください。')
+                        .css('color', 'red');
                         setTimeout(function() {
                             location.reload();
                         }, 3000);
                     });
+                    $(this).find('input').attr('disabled', 'disabled');
                 }
                 return false;
             });
