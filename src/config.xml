@@ -19,4 +19,6 @@
            encoding="utf-8"
            type="text/html"/>
 
+  <update-description href="http://atsushi-takayama.com/hatena-bookmark-opera-extension/update.xml"/>
+
 </widget>
