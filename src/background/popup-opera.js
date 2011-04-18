@@ -43,8 +43,8 @@ if (typeof opera === 'object') {
         }, 10);
         setInterval(function() {
             popup.height = Math.max(200, // minimum height
-                $('#main:visible').height() ||
-                $('#eula:visible').height() + 20); // 20 is margin-top & bottom
+                $('#main:visible').outerHeight() ||
+                $('#eula:visible').outerHeight());
         }, 100);
 
         // add logout button
