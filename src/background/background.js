@@ -171,6 +171,15 @@ ConnectMessenger.bind('bookmarkedit_bridge_set', function(event, data, port) {
     }
     bookmarkeditBridgePorts[url] = port;
     port.onDisconnect.addListener(disconnectHandler);
+    port.onMessage.addListener(function(info, con) {
+        if (info.message == 'bookmarkedit_bridge_recieve' && info.data && info.data.url == url) {
+            console.log('recieve!!');
+            port.postMessage({
+                message: info.message,
+                data: info.data
+            });
+        }
+    });
 });
 
 ConnectMessenger.bind('bookmarkedit_bridge_get', function(event, data, port) {
@@ -179,16 +188,6 @@ ConnectMessenger.bind('bookmarkedit_bridge_get', function(event, data, port) {
     // console.log(bookmarkeditBridgePorts);
     var bridgePort = bookmarkeditBridgePorts[url];
     if (bridgePort) {
-        bridgePort.onMessage.addListener(function(info, con) {
-            if (info.message == 'bookmarkedit_bridge_recieve' && data.url == url) {
-                console.log('recieve!!');
-                port.postMessage({
-                    message: info.message,
-                    data: info.data
-                });
-            }
-        });
-
         bridgePort.postMessage({
             message: 'get',
             data: {}
