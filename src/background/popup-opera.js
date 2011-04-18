@@ -87,8 +87,6 @@ if (typeof opera === 'object') {
                 } else if (!$(this).find('#password').val()) {
                     $('#bookmark-login-header').text('パスワードが空欄です').css('color', 'red');
                 } else {
-                    console.log($(this).html());
-                    console.log($(this).serialize());
                     $.post('http://www.hatena.ne.jp/login', $(this).serialize())
                     .next(function() {
                         opera.extension.postMessage({message: 'login_check'});
