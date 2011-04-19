@@ -162,6 +162,7 @@ ConnectMessenger.bind('get_siteinfos_with_xpath', function(event, data, port) {
     }
 });
 
+var popupPort = null;
 var bookmarkeditBridgePorts = {};
 ConnectMessenger.bind('bookmarkedit_bridge_set', function(event, data, port) {
     var url = data.url;
@@ -174,7 +175,7 @@ ConnectMessenger.bind('bookmarkedit_bridge_set', function(event, data, port) {
     port.onMessage.addListener(function(info, con) {
         if (info.message == 'bookmarkedit_bridge_recieve' && info.data && info.data.url == url) {
             console.log('recieve!!');
-            port.postMessage({
+            popupPort.postMessage({
                 message: info.message,
                 data: info.data
             });
@@ -188,6 +189,7 @@ ConnectMessenger.bind('bookmarkedit_bridge_get', function(event, data, port) {
     // console.log(bookmarkeditBridgePorts);
     var bridgePort = bookmarkeditBridgePorts[url];
     if (bridgePort) {
+        popupPort = port;
         bridgePort.postMessage({
             message: 'get',
             data: {}
