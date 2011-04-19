@@ -36,6 +36,14 @@ if (typeof opera === 'object') {
         // don't know why this element is here
         $('#comment-show').hide();
 
+        // When getting a Tab object, Opera returns faviconUrl even if
+        // the favicon was 404. Chrome returns undefined on such case.
+        // So if an error occurs while loading the favicon, use Hatena's API
+        $('#favicon').bind('error', function onerror() {
+            this.src = Utils.faviconUrl($('#url').attr('href'));
+            $(this).unbind('error', onerror);
+        });
+
         // auto-adjust window size
         var popup = opera.extension.bgProcess.OperaButton.popup;
         setTimeout(function() {
